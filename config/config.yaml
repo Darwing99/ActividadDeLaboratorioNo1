@@ -1,0 +1,26 @@
+project:
+  name: "Analisis Salarios Tecnologicos"
+  version: "1.0.0"
+
+paths:
+  raw_data: "data/raw/analisis_salarios_tecnologicos_5000.xlsx"
+  processed_data: "data/processed/"
+  external_data: "data/external/"
+  models: "models/saved_models/"
+  artifacts: "models/artifacts/"
+  logs: "models/logs/"
+  reports: "reports/"
+  figures: "reports/figures/"
+
+data:
+  target_column: "Salario"
+  categorical_columns:
+    - "Cargo"
+    - "País"
+  drop_columns:
+    - "Nombre"
+
+analysis:
+  top_n: 10
+  salary_bins: [0, 30000, 60000, 90000, 120000, 999999]
+  salary_labels: ["Muy Bajo", "Bajo", "Medio", "Alto", "Muy Alto"]

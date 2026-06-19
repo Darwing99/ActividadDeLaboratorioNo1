@@ -1,0 +1,28 @@
+# Datos sensibles
+data/raw/
+data/external/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+venv/
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Modelos entrenados grandes
+models/saved_models/*.pkl
+models/saved_models/*.joblib
+models/artifacts/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
