@@ -1,7 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "PowerShell(& \".venv\\\\Scripts\\\\pip.exe\" install openpyxl; Write-Host \"Exit: $LASTEXITCODE\")"
-    ]
-  }
-}
