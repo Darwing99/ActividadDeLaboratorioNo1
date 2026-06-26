@@ -1,6 +1,6 @@
 # Datos sensibles
-data/raw/
 data/external/
+# data/raw/ permitido para incluir el dataset del proyecto
 
 # Python
 __pycache__/
