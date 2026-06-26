@@ -37,3 +37,32 @@ def plot_salary_distribution(df, save_path=None):
     if save_path:
         fig.savefig(save_path)
     return fig
+
+
+def plot_employees_by_pais(df, save_path=None):
+    empleados_pais = df["País"].value_counts()
+    umbral = 0.03 * empleados_pais.sum()
+    principales = empleados_pais[empleados_pais >= umbral].copy()
+    otros_total = empleados_pais[empleados_pais < umbral].sum()
+    if otros_total > 0:
+        principales["Otros"] = otros_total
+
+    colores = plt.cm.tab20.colors[: len(principales)]
+    explode = [0.04] * len(principales)
+
+    fig, ax = plt.subplots(figsize=(8, 6))
+    ax.pie(
+        principales.values,
+        labels=principales.index,
+        autopct="%1.1f%%",
+        colors=colores,
+        explode=explode,
+        startangle=140,
+        pctdistance=0.82,
+        textprops={"fontsize": 9},
+    )
+    ax.set_title("Distribución de Empleados por País")
+    plt.tight_layout()
+    if save_path:
+        fig.savefig(save_path)
+    return fig

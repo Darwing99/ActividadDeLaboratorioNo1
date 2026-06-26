@@ -14,6 +14,7 @@ from src.visualization.plots import (
     plot_salary_by_cargo,
     plot_salary_by_pais,
     plot_salary_distribution,
+    plot_employees_by_pais,
 )
 
 st.set_page_config(
@@ -22,7 +23,7 @@ st.set_page_config(
     layout="wide",
 )
 
-st.title("💼 Análisis Estratégico de Salarios Tecnológicos")
+st.title(" Análisis Estratégico de Salarios Tecnológicos")
 st.caption("Actividad de Laboratorio No. 1 — Darwing Rodilso Hernandez Castellanos")
 
 @st.cache_data
@@ -34,10 +35,8 @@ def get_data():
 
 try:
     df, config = get_data()
-except FileNotFoundError as e:
-    from src.data.loader import PROJECT_ROOT
-    st.error(f"Archivo no encontrado: {e}")
-    st.code(f"PROJECT_ROOT = {PROJECT_ROOT}\nArchivo buscado = {PROJECT_ROOT / 'data/raw/analisis_salarios_tecnologicos_5000.xlsx'}\nExiste = {(PROJECT_ROOT / 'data/raw/analisis_salarios_tecnologicos_5000.xlsx').exists()}")
+except FileNotFoundError:
+    st.error("No se encontró el archivo de datos. Verifica que el Excel esté en `data/raw/`.")
     st.stop()
 
 # ── Sidebar filtros ──────────────────────────────────────────────────────────
@@ -79,6 +78,21 @@ with col2:
 
 st.subheader("Distribución de Salarios")
 st.pyplot(plot_salary_distribution(df_f))
+
+col5, col6 = st.columns(2)
+with col5:
+    st.subheader("Empleados por País")
+    st.pyplot(plot_employees_by_pais(df_f))
+
+with col6:
+    st.subheader("Estadísticas por Cargo")
+    st.dataframe(
+        df_f.groupby("Cargo")["Salario"]
+        .agg(Promedio="mean", Maximo="max", Minimo="min", Empleados="count")
+        .sort_values("Promedio", ascending=False)
+        .style.format({"Promedio": "${:,.0f}", "Maximo": "${:,.0f}", "Minimo": "${:,.0f}"}),
+        use_container_width=True,
+    )
 
 st.divider()
 
