@@ -34,8 +34,10 @@ def get_data():
 
 try:
     df, config = get_data()
-except FileNotFoundError:
-    st.error("No se encontró el archivo de datos. Verifica que el Excel esté en `data/raw/`.")
+except FileNotFoundError as e:
+    from src.data.loader import PROJECT_ROOT
+    st.error(f"Archivo no encontrado: {e}")
+    st.code(f"PROJECT_ROOT = {PROJECT_ROOT}\nArchivo buscado = {PROJECT_ROOT / 'data/raw/analisis_salarios_tecnologicos_5000.xlsx'}\nExiste = {(PROJECT_ROOT / 'data/raw/analisis_salarios_tecnologicos_5000.xlsx').exists()}")
     st.stop()
 
 # ── Sidebar filtros ──────────────────────────────────────────────────────────
